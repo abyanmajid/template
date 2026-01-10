@@ -54,6 +54,9 @@ export default antfu(
         ignoreTemplateLiterals: true,
         ignoreRegExpLiterals: true,
       }],
+
+      // Force method chains to break onto new lines
+      'style/newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
     },
   },
   // Override: Allow 'any' in test files
