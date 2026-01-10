@@ -10,10 +10,10 @@ const EnvSchema = z.object({
   LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('info'),
 })
 
-export type Env = z.infer<typeof EnvSchema>
+export type IEnv = z.infer<typeof EnvSchema>
 
 // eslint-disable-next-line import/no-mutable-exports ts/no-redeclare
-let env: Env
+let env: IEnv
 
 try {
   // eslint-disable-next-line no-restricted-globals -- env.ts needs process.env for validation
