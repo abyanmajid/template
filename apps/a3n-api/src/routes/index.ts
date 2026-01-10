@@ -5,4 +5,4 @@ import * as tasksRoutes from '@/routes/tasks/tasks.routes'
 export const tasksRouter = initRouter()
   .openapi(tasksRoutes.list, tasksHandlers.list)
   .openapi(tasksRoutes.insert, tasksHandlers.insert)
-  .openapi(tasksRoutes.getById, () => {})
+  .openapi(tasksRoutes.getById, tasksHandlers.getById)

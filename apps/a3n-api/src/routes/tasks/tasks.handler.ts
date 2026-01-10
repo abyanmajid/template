@@ -1,6 +1,11 @@
 import type { IAppRouteHandler } from '@/lib/types'
-import type { IInsertRoute, IListRoute } from '@/routes/tasks/tasks.routes'
+import type {
+  IGetByIdRoute,
+  IInsertRoute,
+  IListRoute,
+} from '@/routes/tasks/tasks.routes'
 import { TaskEntity } from '@workspace/database/schema/task.entity'
+import { eq } from 'drizzle-orm'
 import * as HttpCode from 'stoker/http-status-codes'
 import db from '@/lib/db'
 
@@ -16,4 +21,15 @@ export const insert: IAppRouteHandler<IInsertRoute> = async (c) => {
     .values(body)
     .returning()
   return c.json(newTask, HttpCode.CREATED)
+}
+
+export const getById: IAppRouteHandler<IGetByIdRoute> = async (c) => {
+  const { id } = c.req.valid('param')
+  const [task] = await db.select()
+    .from(TaskEntity)
+    .where(eq(TaskEntity.id, id))
+  if (!task) {
+    return c.json({ message: `Task not found with id: ${id}` }, HttpCode.NOT_FOUND)
+  }
+  return c.json(task, HttpCode.OK)
 }

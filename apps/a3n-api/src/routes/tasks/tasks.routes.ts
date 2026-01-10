@@ -3,6 +3,7 @@ import { InsertTaskSchema, SelectTaskSchema } from '@workspace/database/schema/t
 import * as HttpCode from 'stoker/http-status-codes'
 import { jsonContent, jsonContentRequired } from 'stoker/openapi/helpers'
 import { createErrorSchema } from 'stoker/openapi/schemas'
+import { NotFoundSchema } from '@/lib/constants'
 
 const tags = ['Tasks']
 
@@ -23,14 +24,32 @@ export const getById = createRoute({
   method: 'get',
   request: {
     params: z.object({
-      id: z.uuid(),
-      example: '123e4567-e89b-12d3-a456-426614174000',
+      id: z.uuid()
+        .openapi({
+          param: {
+            name: 'id',
+            in: 'path',
+          },
+          example: '123e4567-e89b-12d3-a456-426614174000',
+        }),
     }),
   },
   responses: {
-    [HttpCode.OK]: jsonContentRequired(z.array(SelectTaskSchema), 'List tasks'),
+    [HttpCode.OK]: jsonContentRequired(SelectTaskSchema, 'Task'),
+    [HttpCode.NOT_FOUND]: jsonContent(
+      NotFoundSchema,
+      'Task not found',
+    ),
+    [HttpCode.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(z.object({
+        id: z.string(),
+      })),
+      'Invalid task ID format',
+    ),
   },
 })
+
+export type IGetByIdRoute = typeof getById
 
 export const insert = createRoute({
   tags,
@@ -49,3 +68,34 @@ export const insert = createRoute({
 })
 
 export type IInsertRoute = typeof insert
+
+export const patchById = createRoute({
+  tags,
+  path: '/tasks/{id}',
+  method: 'get',
+  request: {
+    params: z.object({
+      id: z.uuid()
+        .openapi({
+          param: {
+            name: 'id',
+            in: 'path',
+          },
+          example: '123e4567-e89b-12d3-a456-426614174000',
+        }),
+    }),
+  },
+  responses: {
+    [HttpCode.OK]: jsonContentRequired(SelectTaskSchema, 'Task'),
+    [HttpCode.NOT_FOUND]: jsonContent(
+      NotFoundSchema,
+      'Task not found',
+    ),
+    [HttpCode.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(z.object({
+        id: z.string(),
+      })),
+      'Invalid task ID format',
+    ),
+  },
+})
