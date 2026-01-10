@@ -1,4 +1,6 @@
-import { initDBClient } from '@workspace/database'
-import env from './env'
+import { initDBClient } from '@workspace/database/client'
+import env from '@/lib/env'
 
-export const db = initDBClient(env.DATABASE_URL)
+const db = initDBClient(env.DATABASE_URL)
+
+export default db
