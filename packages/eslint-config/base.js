@@ -1,32 +1,18 @@
-import js from "@eslint/js"
-import eslintConfigPrettier from "eslint-config-prettier"
-import onlyWarn from "eslint-plugin-only-warn"
-import turboPlugin from "eslint-plugin-turbo"
-import tseslint from "typescript-eslint"
+import antfu from '@antfu/eslint-config'
 
-/**
- * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config}
- * */
-export const config = [
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
+export default antfu(
   {
-    plugins: {
-      turbo: turboPlugin,
+    type: 'lib',
+    typescript: true,
+    formatters: true,
+    stylistic: {
+      indent: 2,
+      quotes: 'single',
     },
+  },
+  {
     rules: {
-      "turbo/no-undeclared-env-vars": "warn",
+      // Add any custom rules here
     },
   },
-  {
-    plugins: {
-      onlyWarn,
-    },
-  },
-  {
-    ignores: ["dist/**"],
-  },
-]
+)

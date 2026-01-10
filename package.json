@@ -10,12 +10,12 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:fix": "turbo lint:fix",
+    "format": "turbo lint:fix"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.7.4",
     "turbo": "^2.6.3",
     "typescript": "5.7.3"
   },
