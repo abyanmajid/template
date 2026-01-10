@@ -13,6 +13,8 @@ routes.forEach((route) => {
   app.route('/api', route)
 })
 
+export type IApi = typeof routes[number]
+
 export default {
   fetch: app.fetch,
   port: env.PORT,
