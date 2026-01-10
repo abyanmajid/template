@@ -16,8 +16,13 @@
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "drizzle-kit": "^0.31.8",
     "turbo": "^2.6.3",
     "typescript": "5.7.3"
   },
-  "packageManager": "bun@1.3.4"
+  "packageManager": "bun@1.3.4",
+  "dependencies": {
+    "drizzle-orm": "^0.45.1",
+    "postgres": "^3.4.8"
+  }
 }
