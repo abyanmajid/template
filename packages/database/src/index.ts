@@ -1,2 +1,2 @@
-export { db } from './client'
+export { initDBClient } from './client'
 export * from './schema'
