@@ -2,6 +2,7 @@
 name: commit
 description: Create well-formatted git commits with conventional commit messages and emoji. Use when the user asks to create a commit, commit changes, or save work to git. Runs pre-commit checks (lint, build, test) before committing.
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git diff:*), Bash(git commit:*), Bash(bun run test), Bash(bun run build), Bash(bun run lint), Bash(bun test)
+model: haiku
 ---
 
 # Git Commit Skill

@@ -2,6 +2,7 @@
 name: checkout-branch
 description: Create and checkout a new git branch with conventional naming based on the task description. Use when the user asks to create a branch, start working on a feature/fix, or begin a new task.
 allowed-tools: Bash(git checkout:*), Bash(git branch:*), Bash(git status:*), AskUserQuestion
+model: haiku
 ---
 
 # Checkout Branch Skill

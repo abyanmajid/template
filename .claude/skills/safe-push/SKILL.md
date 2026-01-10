@@ -2,6 +2,7 @@
 name: safe-push
 description: Safely push changes to remote with protection against pushing to important branches like main, master, production, testing, etc. Use when the user asks to push changes.
 allowed-tools: Bash(git push:*), Bash(git branch:*), Bash(git status:*), Bash(git rev-parse:*), Read, AskUserQuestion
+model: haiku
 ---
 
 # Safe Push Skill
