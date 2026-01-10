@@ -14,7 +14,6 @@
     "format": "turbo lint:fix",
     "db:generate": "cd packages/database && drizzle-kit generate",
     "db:migrate": "cd packages/database && drizzle-kit migrate",
-    "db:push": "cd packages/database && drizzle-kit push",
     "db:studio": "cd packages/database && drizzle-kit studio"
   },
   "devDependencies": {
