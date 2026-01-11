@@ -6,11 +6,11 @@ import z from 'zod'
 expand(config())
 
 const EnvSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production'])
+  NODE_ENV: z.enum(['development', 'production', 'test'])
     .default('development'),
   PORT: z.coerce.number()
     .default(8000),
-  LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
+  LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'])
     .default('info'),
   DATABASE_URL: z.url(),
 })

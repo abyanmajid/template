@@ -1,4 +1,4 @@
-import type { IAppBindings } from '@/lib/types'
+import type { IAppBindings, IAppOpenAPI } from '@/lib/types'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { cors } from 'hono/cors'
 import { requestId } from 'hono/request-id'
@@ -31,4 +31,10 @@ export function initApp() {
   app.onError(onError)
 
   return app
+}
+
+export function initTestApp(router: IAppOpenAPI) {
+  const testApp = initApp()
+  testApp.route('/', router)
+  return testApp
 }
