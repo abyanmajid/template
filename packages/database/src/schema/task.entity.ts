@@ -20,6 +20,7 @@ export const TaskEntity = pgTable('Task', {
 
 // Zod schema for API responses
 export const SelectTaskSchema = createSelectSchema(TaskEntity)
+
 export const InsertTaskSchema = createInsertSchema(TaskEntity)
   .required({
     title: true,
@@ -31,6 +32,9 @@ export const InsertTaskSchema = createInsertSchema(TaskEntity)
     updatedAt: true,
   })
 
+export const UpdateTaskSchema = InsertTaskSchema.partial();
+
 // TypeScript types
 export type ISelectTaskEntity = z.infer<typeof SelectTaskSchema>
 export type IInsertTaskEntity = z.infer<typeof InsertTaskSchema>
+export type IUpdateTaskEntity = z.infer<typeof UpdateTaskSchema>

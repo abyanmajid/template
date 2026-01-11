@@ -1,5 +1,6 @@
 import type { IAppOpenAPI } from '@/lib/types'
 import { Scalar } from '@scalar/hono-api-reference'
+import env from '@/lib/env'
 import packageJSON from '../../package.json'
 
 export default function configureOpenAPI(app: IAppOpenAPI) {
@@ -9,6 +10,12 @@ export default function configureOpenAPI(app: IAppOpenAPI) {
       version: packageJSON.version,
       title: 'a3n API',
     },
+    servers: [
+      {
+        url: `http://localhost:${env.PORT}`,
+        description: 'Local server',
+      },
+    ],
   })
 
   app.get(

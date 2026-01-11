@@ -1,9 +1,17 @@
 import { createRoute, z } from '@hono/zod-openapi'
-import { InsertTaskSchema, SelectTaskSchema } from '@workspace/database/schema/task.entity'
+import {
+  InsertTaskSchema,
+  SelectTaskSchema,
+  UpdateTaskSchema,
+} from '@workspace/database/schema/task.entity'
 import * as HttpCode from 'stoker/http-status-codes'
-import { jsonContent, jsonContentRequired } from 'stoker/openapi/helpers'
+import {
+  jsonContent,
+  jsonContentOneOf,
+  jsonContentRequired,
+} from 'stoker/openapi/helpers'
 import { createErrorSchema } from 'stoker/openapi/schemas'
-import { NotFoundSchema } from '@/lib/constants'
+import { IdParamSchema, NotFoundSchema } from '@/lib/constants'
 
 const tags = ['Tasks']
 
@@ -56,7 +64,7 @@ export const insert = createRoute({
   path: '/tasks',
   method: 'post',
   request: {
-    body: jsonContent(InsertTaskSchema, 'Task data'),
+    body: jsonContentRequired(InsertTaskSchema, 'Task data'),
   },
   responses: {
     [HttpCode.CREATED]: jsonContent(SelectTaskSchema, 'Created task'),
@@ -69,33 +77,52 @@ export const insert = createRoute({
 
 export type IInsertRoute = typeof insert
 
-export const patchById = createRoute({
+export const updateById = createRoute({
   tags,
   path: '/tasks/{id}',
-  method: 'get',
+  method: 'put',
   request: {
-    params: z.object({
-      id: z.uuid()
-        .openapi({
-          param: {
-            name: 'id',
-            in: 'path',
-          },
-          example: '123e4567-e89b-12d3-a456-426614174000',
-        }),
-    }),
+    params: IdParamSchema,
+    body: jsonContent(UpdateTaskSchema, 'Task updates'),
   },
   responses: {
-    [HttpCode.OK]: jsonContentRequired(SelectTaskSchema, 'Task'),
+    [HttpCode.OK]: jsonContent(SelectTaskSchema, 'Updated task'),
+    [HttpCode.UNPROCESSABLE_ENTITY]: jsonContentOneOf(
+      [
+        createErrorSchema(UpdateTaskSchema),
+        createErrorSchema(IdParamSchema),
+      ],
+      'Validation error',
+    ),
     [HttpCode.NOT_FOUND]: jsonContent(
       NotFoundSchema,
       'Task not found',
     ),
+  },
+})
+
+export type IUpdateByIdRoute = typeof updateById
+
+export const deleteById = createRoute({
+  tags,
+  path: '/tasks/{id}',
+  method: 'delete',
+  request: {
+    params: IdParamSchema,
+  },
+  responses: {
+    [HttpCode.NO_CONTENT]: {
+      description: 'Task deleted',
+    },
     [HttpCode.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(z.object({
-        id: z.string(),
-      })),
-      'Invalid task ID format',
+      createErrorSchema(IdParamSchema),
+      'Invalid ID format',
+    ),
+    [HttpCode.NOT_FOUND]: jsonContent(
+      NotFoundSchema,
+      'Task not found',
     ),
   },
 })
+
+export type IDeleteByIdRoute = typeof deleteById
