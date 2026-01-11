@@ -5,15 +5,11 @@ import { tasksRouter } from '@/routes'
 
 const app = initApp()
 
-const routes = [tasksRouter]
-
 configureOpenAPI(app)
 
-routes.forEach((route) => {
-  app.route('/api', route)
-})
+const _app = app.route('/api', tasksRouter)
 
-export type IApi = typeof routes[number]
+export type IApi = typeof _app
 
 export default {
   fetch: app.fetch,

@@ -10,17 +10,17 @@ import {
 import { initApp } from '@/lib/init'
 import { tasksRouter } from '@/routes'
 
+const tc = testClient(initApp().route('/', tasksRouter))
+
 describe('tasks list', () => {
   it('responds with an array of tasks', async () => {
-    const client = testClient(initApp().route('/', tasksRouter))
-    const response = await client.tasks.$get()
+    const response = await tc.tasks.$get()
     const json = await response.json()
     expectTypeOf(json).toBeArray()
   })
 
   it('validates the id param', async () => {
-    const client = testClient(initApp().route('/', tasksRouter))
-    const response = await client.tasks[':id'].$get({
+    const response = await tc.tasks[':id'].$get({
       param: {
         id: 'invalid',
       },
@@ -29,8 +29,7 @@ describe('tasks list', () => {
   })
 
   it('validates the body when inserting', async () => {
-    const client = testClient(initApp().route('/', tasksRouter))
-    const response = await client.tasks.$post({
+    const response = await tc.tasks.$post({
       // @ts-expect-error - invalid body
       json: {
         title: 'Learn Bun',
