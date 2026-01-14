@@ -2,14 +2,29 @@
   // Tailwind
   "tailwindCSS.experimental.configFile": "packages/ui/src/styles/globals.css",
 
-  // Editor formatting - use ESLint for everything
+  // Editor formatting - auto-format with TypeScript formatter (respects semicolon preference)
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
+  "editor.defaultFormatter": "vscode.typescript-language-features",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true
   },
-  "eslint.format.enable": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true
+  },
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove",
+  "editor.codeActionsOnSave": {},
+  "eslint.format.enable": false,
 
   // Line length and wrapping
   "editor.wordWrap": "on",
@@ -22,6 +37,10 @@
   "files.trimFinalNewlines": true,
 
   // TypeScript/JavaScript
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.semicolons": "remove",
+  "javascript.preferences.semicolons": "remove",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
