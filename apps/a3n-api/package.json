@@ -9,12 +9,15 @@
     "dev": "bun run --hot src/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "LOG_LEVEL=silent vitest"
+    "test": "LOG_LEVEL=silent vitest",
+    "typecheck": "tsc --noEmit",
+    "validate": "bun run typecheck && bun run lint && bun run test"
   },
   "dependencies": {
     "@hono/zod-openapi": "^1.2.0",
     "@scalar/hono-api-reference": "^0.9.32",
     "@workspace/database": "workspace:*",
+    "better-auth": "^1.4.12",
     "dotenv": "^17.2.3",
     "dotenv-expand": "^12.0.3",
     "hono": "^4.11.3",

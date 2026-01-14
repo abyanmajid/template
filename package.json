@@ -12,14 +12,22 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "turbo lint:fix",
+    "typecheck": "turbo typecheck",
+    "validate": "turbo validate",
+    "setup:env": "./scripts/setup-env.sh",
     "db:generate": "cd packages/database && drizzle-kit generate",
     "db:migrate": "cd packages/database && drizzle-kit migrate",
-    "db:studio": "cd packages/database && drizzle-kit studio"
+    "db:studio": "cd packages/database && drizzle-kit studio",
+    "dep:a3n-web": "bun add --cwd apps/a3n-web",
+    "dep:a3n-api": "bun add --cwd apps/a3n-api",
+    "cn": "bunx shadcn@latest add -c apps/a3n-web",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "drizzle-kit": "^0.31.8",
+    "husky": "^9.1.7",
     "turbo": "^2.6.3",
     "typescript": "5.7.3"
   },
