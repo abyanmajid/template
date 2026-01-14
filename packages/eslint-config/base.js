@@ -4,14 +4,43 @@ export default antfu(
   {
     type: 'lib',
     typescript: true,
-    formatters: true,
-    stylistic: {
-      indent: 2,
-      quotes: 'single',
-    },
+    formatters: false, // Disable formatters - no auto-formatting
+    stylistic: false,  // Disable ALL stylistic rules
+    ignores: [
+      // Build outputs
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/.turbo/**',
+      '**/out/**',
+
+      // Dependencies
+      '**/node_modules/**',
+      '**/bun.lock',
+      '**/package-lock.json',
+      '**/yarn.lock',
+
+      // Documentation and non-code files
+      '**/*.md',
+      '**/*.mdx',
+      '**/README*',
+      '**/CHANGELOG*',
+      '**/LICENSE*',
+
+      // Config files that don't need linting
+      '**/.env*',
+      '**/.vscode/**',
+      '**/.idea/**',
+
+      // Generated files
+      '**/coverage/**',
+      '**/.cache/**',
+    ],
   },
   {
     rules: {
+      // === PRACTICAL RULES ONLY - BUG PREVENTION ===
+
       // Disable console usage - enforce proper logging libraries
       'no-console': 'error',
 
@@ -36,27 +65,52 @@ export default antfu(
       // Allow global process usage
       'node/prefer-global/process': 'off',
 
-      // Force multiline for long objects
-      'style/object-curly-newline': ['error', {
-        multiline: true,
-        minProperties: 3,
-        consistent: true,
-      }],
-      'style/object-property-newline': ['error', {
-        allowAllPropertiesOnSameLine: false,
-      }],
+      // Allow index as key in React lists
+      'react/no-array-index-key': 'off',
 
-      // Enforce max line length
-      'style/max-len': ['error', {
-        code: 100,
-        ignoreUrls: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
-        ignoreRegExpLiterals: true,
-      }],
+      // === DISABLE ALL FORMATTING RULES ===
 
-      // Force method chains to break onto new lines
-      'style/newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+      // Disable all style rules - use Prettier or editor formatting instead
+      'style/object-curly-newline': 'off',
+      'style/object-property-newline': 'off',
+      'style/max-len': 'off',
+      'style/newline-per-chained-call': 'off',
+      'style/arrow-parens': 'off',
+      'style/quotes': 'off',
+      'style/semi': 'off',
+      'style/indent': 'off',
+      'style/comma-dangle': 'off',
+      'style/brace-style': 'off',
+      'style/space-before-function-paren': 'off',
+      'style/operator-linebreak': 'off',
+      'style/multiline-ternary': 'off',
+
+      // Disable perfectionist rules - they add time overhead without practical benefit
+      'perfectionist/sort-imports': 'off',
+      'perfectionist/sort-named-imports': 'off',
+      'perfectionist/sort-named-exports': 'off',
+      'perfectionist/sort-exports': 'off',
+      'perfectionist/sort-objects': 'off',
+      'perfectionist/sort-object-types': 'off',
+      'perfectionist/sort-interfaces': 'off',
+      'perfectionist/sort-enums': 'off',
+      'perfectionist/sort-classes': 'off',
+      'perfectionist/sort-array-includes': 'off',
+
+      // Aggressively disable ALL @stylistic/* rules
+      '@stylistic/quotes': 'off',
+      '@stylistic/semi': 'off',
+      '@stylistic/indent': 'off',
+      '@stylistic/comma-dangle': 'off',
+      '@stylistic/arrow-parens': 'off',
+    },
+  },
+  {
+    // Disable ALL style/* and @stylistic/* rules globally
+    ignores: [],
+    rules: {
+      'style/*': 'off',
+      '@stylistic/*': 'off',
     },
   },
   // Override: Allow 'any' in test files
