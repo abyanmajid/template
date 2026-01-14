@@ -16,7 +16,7 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  if (!session) {
+  if (!session && !request.nextUrl.pathname.startsWith("/sign-in")) {
     return NextResponse.redirect(new URL("/sign-in", request.url))
   }
 
