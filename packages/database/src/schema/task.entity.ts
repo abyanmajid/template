@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 export const priorityEnum = pgEnum('priority', ['low', 'medium', 'high'])
 
-export const TaskEntity = pgTable('Task', {
+export const tasks = pgTable('task', {
   id: uuid('id').primaryKey().defaultRandom(),
   title: text('title').notNull(),
   description: text('description'),
@@ -19,9 +19,9 @@ export const TaskEntity = pgTable('Task', {
 })
 
 // Zod schema for API responses
-export const SelectTaskSchema = createSelectSchema(TaskEntity)
+export const SelectTaskSchema = createSelectSchema(tasks)
 
-export const InsertTaskSchema = createInsertSchema(TaskEntity)
+export const InsertTaskSchema = createInsertSchema(tasks)
   .required({
     title: true,
     completed: true,
@@ -32,9 +32,9 @@ export const InsertTaskSchema = createInsertSchema(TaskEntity)
     updatedAt: true,
   })
 
-export const UpdateTaskSchema = InsertTaskSchema.partial();
+export const UpdateTaskSchema = InsertTaskSchema.partial()
 
 // TypeScript types
-export type ISelectTaskEntity = z.infer<typeof SelectTaskSchema>
-export type IInsertTaskEntity = z.infer<typeof InsertTaskSchema>
-export type IUpdateTaskEntity = z.infer<typeof UpdateTaskSchema>
+export type ISelecttasks = z.infer<typeof SelectTaskSchema>
+export type IInserttasks = z.infer<typeof InsertTaskSchema>
+export type IUpdatetasks = z.infer<typeof UpdateTaskSchema>

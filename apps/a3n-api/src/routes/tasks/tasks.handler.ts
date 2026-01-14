@@ -6,24 +6,24 @@ import type {
   IListRoute,
   IUpdateByIdRoute,
 } from '@/routes/tasks/tasks.routes'
-import { TaskEntity } from '@workspace/database/schema/task.entity'
+import { tasks } from '@workspace/database/schema/task.entity'
 import { eq } from 'drizzle-orm'
 import * as HttpCode from 'stoker/http-status-codes'
 import db from '@/lib/db'
 
 export const list: IAppRouteHandler<IListRoute> = async (c) => {
-  const tasks = await db.select()
-    .from(TaskEntity)
+  const tasksList = await db.select()
+    .from(tasks)
 
-  return c.json(tasks, HttpCode.OK)
+  return c.json(tasksList, HttpCode.OK)
 }
 
 export const getById: IAppRouteHandler<IGetByIdRoute> = async (c) => {
   const { id } = c.req.valid('param')
 
   const [task] = await db.select()
-    .from(TaskEntity)
-    .where(eq(TaskEntity.id, id))
+    .from(tasks)
+    .where(eq(tasks.id, id))
 
   if (!task) {
     return c.json({ message: `Task not found with id: ${id}` }, HttpCode.NOT_FOUND)
@@ -35,7 +35,7 @@ export const getById: IAppRouteHandler<IGetByIdRoute> = async (c) => {
 export const insert: IAppRouteHandler<IInsertRoute> = async (c) => {
   const body = c.req.valid('json')
 
-  const [newTask] = await db.insert(TaskEntity)
+  const [newTask] = await db.insert(tasks)
     .values(body)
     .returning()
 
@@ -46,9 +46,9 @@ export const updateById: IAppRouteHandler<IUpdateByIdRoute> = async (c) => {
   const { id } = c.req.valid('param')
   const updates = c.req.valid('json')
 
-  const [task] = await db.update(TaskEntity)
+  const [task] = await db.update(tasks)
     .set(updates)
-    .where(eq(TaskEntity.id, id))
+    .where(eq(tasks.id, id))
     .returning()
 
   if (!task) {
@@ -61,8 +61,8 @@ export const updateById: IAppRouteHandler<IUpdateByIdRoute> = async (c) => {
 export const deleteById: IAppRouteHandler<IDeleteByIdRoute> = async (c) => {
   const { id } = c.req.valid('param')
 
-  const result = await db.delete(TaskEntity)
-    .where(eq(TaskEntity.id, id))
+  const result = await db.delete(tasks)
+    .where(eq(tasks.id, id))
     .returning()
 
   if (result.length === 0) {

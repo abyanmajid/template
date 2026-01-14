@@ -10,7 +10,7 @@ import {
 import { initApp } from '@/lib/init'
 import { tasksRouter } from '@/routes'
 
-const tc = testClient(initApp().route('/', tasksRouter))
+const tc = testClient(initApp().route('/', tasksRouter)).api
 
 describe('tasks list', () => {
   it('responds with an array of tasks', async () => {
