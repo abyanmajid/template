@@ -1,2 +1,6 @@
 export { initDBClient } from './client'
 export * from './schema/task.entity'
+export * from './schema/user.entity'
+export * from './schema/session.entity'
+export * from './schema/account.entity'
+export * from './schema/verification.entity'
