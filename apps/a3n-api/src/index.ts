@@ -7,7 +7,7 @@ const app = initApp()
 
 configureOpenAPI(app)
 
-const _app = app.route('/api', tasksRouter)
+const _app = app.route("/", tasksRouter)
 
 export type IApi = typeof _app
 

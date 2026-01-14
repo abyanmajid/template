@@ -9,6 +9,8 @@ import {
 } from 'stoker/middlewares'
 import { defaultHook } from 'stoker/openapi'
 import { logger } from '@/middlewares/logger'
+import { injectAuth } from '@/lib/auth'
+import { getCorsOrigins } from '@/lib/cors'
 
 export function initRouter() {
   return new OpenAPIHono<IAppBindings>({
@@ -18,13 +20,22 @@ export function initRouter() {
 }
 
 export function initApp() {
-  const app = initRouter()
+  const app = initRouter().basePath("/api")
 
-  // Middlewares
-  app.use(cors())
   app.use(requestId())
   app.use(serveEmojiFavicon('❤️'))
   app.use(logger())
+
+  app.use(cors({
+    origin: getCorsOrigins(),
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["POST", "GET", "OPTIONS", "DELETE", "PUT", "PATCH"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  }))
+
+  injectAuth(app)
 
   // Catch all
   app.notFound(notFound)

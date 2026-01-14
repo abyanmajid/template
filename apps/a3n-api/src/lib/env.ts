@@ -1,7 +1,7 @@
-import type { ZodError } from 'zod';
-import { config } from 'dotenv';
-import { expand } from 'dotenv-expand';
-import z from 'zod';
+import type { ZodError } from 'zod'
+import { config } from 'dotenv'
+import { expand } from 'dotenv-expand'
+import z from 'zod'
 
 expand(config())
 
@@ -12,6 +12,13 @@ const EnvSchema = z.object({
   LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'])
     .default('info'),
   DATABASE_URL: z.url(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+  BETTER_AUTH_SECRET: z.string(),
+  BETTER_AUTH_URL: z.url(),
+  DISABLE_AUTH_GUARD: z.coerce.boolean()
+    .optional()
+    .default(false),
 })
 
 export type IEnv = z.infer<typeof EnvSchema>

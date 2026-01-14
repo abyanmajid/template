@@ -22,8 +22,11 @@ export default function configureOpenAPI(app: IAppOpenAPI) {
     '/reference',
     Scalar({
       title: 'a3n API Reference',
-      url: '/openapi',
       theme: 'deepSpace',
+      sources: [
+        { url: "/api/openapi", title: "API" },
+        { url: "/api/auth/open-api/generate-schema", title: "Auth" },
+      ],
     }),
   )
 }

@@ -2,7 +2,9 @@ import { initRouter } from '@/lib/init'
 import * as tasksHandlers from '@/routes/tasks/tasks.handler'
 import * as tasksRoutes from '@/routes/tasks/tasks.routes'
 
-export const tasksRouter = initRouter()
+const router = initRouter()
+
+export const tasksRouter = router
   .openapi(tasksRoutes.list, tasksHandlers.list)
   .openapi(tasksRoutes.insert, tasksHandlers.insert)
   .openapi(tasksRoutes.getById, tasksHandlers.getById)
