@@ -1,5 +1,26 @@
 # Claude Configuration
 
+## Type Safety Protocol
+
+**CRITICAL: After ANY code change, you MUST verify types.**
+
+### Required Steps After Every Code Change:
+1. Run `bun run typecheck` in the affected workspace (apps/a3n-web or apps/a3n-api)
+2. Show the full output to the user
+3. Fix ALL type errors before proceeding
+4. NEVER use `any` or type assertions (`as`) to suppress errors without explicit user approval
+5. When you see a type error, READ IT - the types are usually correct and you're using the API wrong
+
+### When Type Errors Appear:
+- **FIRST:** Check if you're calling the API correctly (e.g., `api.tasks.$get()` not `api.tasks.index.$get()`)
+- **SECOND:** Check if the types match reality (e.g., API returns dates as strings, not Date objects)
+- **LAST RESORT:** Only use `any` or type assertions if the user explicitly approves it
+
+### Why This Matters:
+- The typed RPC client (Hono) PREVENTS API mismatches at compile time
+- TypeScript errors are HINTS that you're doing something wrong, not obstacles to suppress
+- Ignoring type errors wastes tokens and time debugging runtime issues
+
 ## Build/Lint Error Fixes
 
 When fixing build or lint errors, **always ask for permission before modifying logic-relevant code**. This includes:
