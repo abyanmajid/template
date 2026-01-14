@@ -4,6 +4,12 @@ import type { Session } from 'better-auth'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+const AUTH_ROUTES = ["/sign-in", "/sign-up", "/forgot-password"]
+
+function isAuthRoute(pathname: string): boolean {
+  return AUTH_ROUTES.some(route => pathname.startsWith(route))
+}
+
 export async function proxy(request: NextRequest) {
   // Fetch session from API with cookies
   const { data: session } = await betterFetch<Session>(
@@ -16,11 +22,15 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  if (!session && !request.nextUrl.pathname.startsWith("/sign-in")) {
+  const pathname = request.nextUrl.pathname
+
+  // Redirect unauthenticated users to sign-in (except if they're already on an auth page)
+  if (!session && !isAuthRoute(pathname)) {
     return NextResponse.redirect(new URL("/sign-in", request.url))
   }
 
-  if (session && request.nextUrl.pathname.startsWith("/sign-in")) {
+  // Redirect authenticated users away from auth pages
+  if (session && isAuthRoute(pathname)) {
     return NextResponse.redirect(new URL("/", request.url))
   }
 
