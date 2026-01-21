@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "a3n-api": ["../a3n-api/src/index.ts"]
+    }
+  }
+}

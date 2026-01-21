@@ -1,6 +1,4 @@
-import { env } from '@/lib/env'
-import { betterFetch } from '@better-fetch/fetch'
-import type { Session } from 'better-auth'
+import { getSessionFromRequest } from '@/features/auth/api'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
@@ -11,17 +9,7 @@ function isAuthRoute(pathname: string): boolean {
 }
 
 export async function proxy(request: NextRequest) {
-  // Fetch session from API with cookies
-  const { data: session } = await betterFetch<Session>(
-    "/api/auth/get-session",
-    {
-      baseURL: env.NEXT_PUBLIC_API_BASE_URL,
-      headers: {
-        cookie: request.headers.get("cookie") || "",
-      }
-    }
-  )
-
+  const session = await getSessionFromRequest(request)
   const pathname = request.nextUrl.pathname
 
   // Redirect unauthenticated users to sign-in (except if they're already on an auth page)

@@ -3,6 +3,6 @@ export const urls = {
   signIn: "/sign-in",
   signUp: "/sign-up",
   forgotPassword: "/forgot-password",
-  termsOfService: "/terms-of-service",
-  privacyPolicy: "/privacy-policy",
+  termsOfService: "#",
+  privacyPolicy: "#",
 }
