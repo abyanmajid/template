@@ -3,7 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./types.d.ts",
+      "default": "./src/index.ts"
+    }
   },
   "scripts": {
     "dev": "bun run --hot src/index.ts",
