@@ -14,9 +14,13 @@ To create a commit, just type:
 /commit
 ```
 
-To run with pre-commit checks:
+To run without pre-commit checks:
 ```
 /commit --no-verify
+```
+or shorthand:
+```
+/commit --nv
 ```
 
 To generate docs pre-commit:
@@ -28,7 +32,7 @@ Multiple flags can be passed.
 
 ## What This Command Does
 
-1. Unless specified with `--no-verify`, automatically runs pre-commit checks:
+1. Unless specified with `--no-verify` (or `--nv`), automatically runs pre-commit checks:
    - Lint to ensure code quality
    - Verify the app(s) in question builds
    - Run test suite if there is any. If there are failing tests, do NOT proceed and provide the user a summary of the failing test/s and prompt them if they would like you to fix it.
@@ -114,5 +118,5 @@ Example of splitting commits:
 
 ## Command Options
 
-- `--no-verify`: Skip running the pre-commit checks (lint, build, test)
+- `--no-verify`, `--nv`: Skip running the pre-commit checks (lint, build, test)
 - `--d`: Update relevant documentation if needed
